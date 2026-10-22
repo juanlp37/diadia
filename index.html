@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Día a día</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F0FB;--card:#fff;--ink:#1D1A33;--mut:#6B6885;--line:#E4E0F4;--acc:#5B3DF5;--g1:#5B3DF5;--g2:#9B5CFF;--accfg:#fff;--ok:#22C997;--okfg:#06382B;--hi:#FFC83D;--hifg:#3A2A00;--warm:#FF6B6B;--sh:0 6px 20px rgba(60,40,140,.09);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#13111F;--card:#1D1A2E;--ink:#EFEDFA;--mut:#A29FBD;--line:#2E2A47;--acc:#8B74FF;--g1:#4A33C9;--g2:#7B3FE0;--ok:#34D9A8;--okfg:#05281F;--hi:#F2C14E;--hifg:#2B1F00;--sh:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#13111F;--card:#1D1A2E;--ink:#EFEDFA;--mut:#A29FBD;--line:#2E2A47;--acc:#8B74FF;--g1:#4A33C9;--g2:#7B3FE0;--ok:#34D9A8;--okfg:#05281F;--hi:#F2C14E;--hifg:#2B1F00;--sh:none;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.45 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px 16px 56px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:14px;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2));border-radius:28px;padding:22px;box-shadow:0 12px 32px rgba(91,61,245,.28)}
+.date{margin:0;font-size:14px;opacity:.85;text-transform:capitalize}
+.hi{margin:2px 0 4px;font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+#sub{margin:0;font-size:15px;opacity:.95}
+.ring{--p:0deg;flex:none;width:96px;height:96px;border-radius:50%;background:conic-gradient(var(--hi) var(--p),rgba(255,255,255,.28) 0);display:grid;place-items:center;transition:background .3s}
+.ringin{width:76px;height:76px;border-radius:50%;background:var(--g1);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.ringin b{font-size:26px;font-weight:800}.ringin span{font-size:11px;opacity:.85}
+.tabs{display:flex;gap:4px;background:var(--card);border-radius:18px;padding:4px;box-shadow:var(--sh);margin:16px 0}
+.tab{flex:1;padding:10px 2px;border-radius:14px;font-weight:600;font-size:14px;color:var(--mut)}
+.tab.on{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff}
+.ban{display:block;width:100%;text-align:left;background:var(--hi);color:var(--hifg);border-radius:18px;padding:13px 16px;font-weight:600;margin-bottom:14px}
+h2{font-size:21px;font-weight:800;margin:26px 0 10px;letter-spacing:-.01em}
+ul{list-style:none;margin:0;padding:0}
+.h{display:flex;align-items:center;gap:12px;padding:12px;background:var(--card);border-radius:22px;box-shadow:var(--sh);margin-bottom:10px;border-left:6px solid var(--ok)}
+.chk{flex:none;width:48px;height:48px;border-radius:16px;border:2px solid var(--line);font-size:24px;color:transparent;background:var(--bg)}
+.chk.on{background:var(--ok);border-color:var(--ok);color:var(--okfg);animation:pop .25s}
+@keyframes pop{50%{transform:scale(1.14)}}
+.hn{flex:1;min-width:0}
+.hn b{display:block;font-weight:600;overflow-wrap:anywhere}
+.on+.hn b{color:var(--mut);text-decoration:line-through;text-decoration-thickness:1px}
+.dots{display:flex;gap:5px;margin-top:6px}
+.dot{width:18px;height:18px;border-radius:6px;background:var(--line);padding:0}
+.dot.on{background:var(--ok)}
+.dot.today{outline:2px solid var(--acc);outline-offset:1px}
+.st{font-size:13px;font-weight:600;background:var(--hi);color:var(--hifg);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.st::before{content:"🔥 "}
+.x{color:var(--mut);font-size:22px;width:32px;height:32px;border-radius:10px}
+.add{display:flex;gap:8px;margin-top:4px}
+input{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 14px;min-width:0}
+input:focus{border-color:var(--acc);outline:0}
+.add input{flex:1}
+.btn{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;font-weight:700;border-radius:16px;padding:12px 20px}
+.money{background:var(--card);border-radius:28px;padding:20px;margin-top:4px;box-shadow:var(--sh);border-top:6px solid var(--warm)}
+.money h2{margin-top:0}
+.tot{display:flex;gap:8px;margin-bottom:16px}
+.tot div{flex:1;background:var(--bg);border-radius:16px;padding:10px 12px}
+.tot small{display:block;color:var(--mut);font-size:13px}
+.tot b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{border:2px solid var(--line);border-radius:99px;padding:6px 15px;font-size:15px}
+.chip.on{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;border-color:transparent}
+.note{width:100%;margin-bottom:10px}
+.amt{display:flex;gap:8px}
+.amt input{flex:1;font-size:22px;font-weight:700}
+.e{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.e span{flex:1}.e b{font-weight:700}
+.cat{margin-top:18px}
+.cat div{display:flex;align-items:center;gap:10px;font-size:14px;margin:8px 0}
+.cat i{display:block;height:10px;border-radius:99px;background:linear-gradient(90deg,var(--warm),var(--hi));min-width:4px}
+.cat span{width:84px;color:var(--mut)}.cat b{font-weight:700;white-space:nowrap}
+.empty{color:var(--mut);padding:10px 4px}
+.wk,.hd{background:var(--card);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.wk h3{margin:0 0 6px;font-size:18px}
+.wk small{color:var(--mut);font-weight:400;font-size:14px}
+.wk p{margin:4px 0}
+.hd b{display:block;text-transform:capitalize}
+.hd span{display:block;color:var(--mut);font-size:14px}
+.old{display:flex;justify-content:space-between;gap:10px;padding:9px 4px;border-top:1px solid var(--line);font-size:14px;color:var(--mut)}
+.sub{margin:22px 0 0;font-size:15px;color:var(--mut)}
+.wel{position:fixed;inset:0;z-index:20;background:rgba(20,15,50,.65);display:grid;place-items:center;padding:20px}
+.welbox{width:100%;max-width:380px;background:var(--card);border-radius:28px;padding:26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.welbox h2{margin:0 0 6px}
+.welbox p{margin:0 0 16px;color:var(--mut)}
+.welbox input{width:100%;margin-bottom:12px;font-size:18px}
+.welbox .btn{width:100%}
+.ai{background:var(--card);border-radius:24px;padding:18px;margin-top:20px;box-shadow:var(--sh)}
+.ai h2{margin:0 0 4px}
+.disc{color:var(--mut);font-size:13px;margin:4px 0 12px}
+.anaout{margin-top:14px;white-space:pre-wrap;line-height:1.55}
+.anaout p{margin:0 0 10px;white-space:normal}
+.ai .btn:disabled{opacity:.6}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.chk.on{animation:none}.ring{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top"><div><p class="date" id="date"></p><p class="hi" id="hi"></p><p id="sub"></p></div><div class="ring"><div class="ringin"><b id="prog"></b><span>hábitos</span></div></div></header>
+  <nav class="tabs"><button class="tab on" data-act="view" data-v="hoy">Hábitos</button><button class="tab" data-act="view" data-v="gas">Gastos</button><button class="tab" data-act="view" data-v="res">Resumen</button><button class="tab" data-act="view" data-v="his">Historial</button></nav>
+  <div id="v-hoy">
+  <button class="ban" id="ban" data-act="view" data-v="res" hidden>Tu resumen de la semana pasada está listo. Verlo</button>
+
+  <h2>✅ Hábitos</h2>
+  <ul id="habits"></ul>
+  <div class="add">
+    <input id="newh" placeholder="Nuevo hábito" maxlength="40" aria-label="Nuevo hábito">
+    <button class="btn" data-act="addh">Añadir</button>
+  </div>
+
+  </div>
+  <div id="v-gas" hidden>
+  <section class="money">
+    <h2>💶 Gastos pequeños</h2>
+    <div class="tot">
+      <div><small>Hoy</small><b id="t-day"></b></div>
+      <div><small>7 días</small><b id="t-week"></b></div>
+      <div><small>Este mes</small><b id="t-month"></b></div>
+    </div>
+    <div class="amt">
+      <input id="amt" inputmode="decimal" placeholder="0,00 €" aria-label="Importe">
+      <button class="btn" data-act="adde">Guardar</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <input class="note" id="note" maxlength="60" placeholder="¿Qué ha sido? (obligatorio en Otros)" aria-label="Descripción del gasto" hidden>
+    <div id="elist"></div>
+    <div class="cat" id="cats"></div>
+  </section>
+  </div>
+  <div id="v-res" hidden><h2>Resumen semanal</h2><div id="res"></div>
+    <div class="ai"><h2>Consejos para ti</h2><p class="disc">Analizo tus últimas 2 semanas de hábitos y gastos.</p><button class="btn" id="ana" data-act="ana">Analizar mis datos</button><div class="anaout" id="anaout" hidden></div></div></div>
+  <div id="v-his" hidden><h2>Historial</h2><ul id="his"></ul></div>
+</main>
+<div class="wel" id="welcome" hidden><div class="welbox"><h2>¡Hola! ¿Cómo te llamas?</h2><p>Así podré saludarte cada día. Tus datos se guardan solo en este dispositivo.</p><input id="nm" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="given-name"><button class="btn" data-act="name">Empezar</button></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const K='dia-a-dia-v1';
+const CATS=['Café','Comida','Transporte','Ocio','Otros'];
+let S={habits:[{id:'h1',n:'Beber agua'},{id:'h2',n:'Caminar 20 min'},{id:'h3',n:'Leer 10 min'}],log:{},exp:[],cat:'Café'};
+try{const r=localStorage.getItem(K);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const pad=n=>String(n).padStart(2,'0');
+const ds=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const eur=n=>n.toLocaleString('es-ES',{style:'currency',currency:'EUR'});
+const done=(d,id)=>(S.log[d]||[]).includes(id);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+function streak(id){let d=new Date(),n=0;if(!done(ds(d),id))d=addDays(d,-1);while(done(ds(d),id)){n++;d=addDays(d,-1)}return n}
+const sum=a=>a.reduce((s,e)=>s+e.a,0);
+
+function render(){
+  const now=new Date(),t=ds(now);
+  const days=[6,5,4,3,2,1,0].map(i=>ds(addDays(now,-i)));
+  const total=S.habits.length,dn=S.habits.filter(h=>done(t,h.id)).length;
+  $('#date').textContent=now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  const hr=now.getHours(),left=total-dn;
+  $('#prog').textContent=dn+'/'+total;
+  $('#hi').textContent=(hr<6?'Buenas noches':hr<13?'Buenos días':hr<20?'Buenas tardes':'Buenas noches')+(S.name?', '+S.name:'');
+  $('#sub').textContent=!total?'Añade tu primer hábito':left===0?'¡Todo hecho por hoy!':'Te faltan '+left+(left>1?' hábitos':' hábito');
+  document.querySelector('.ring').style.setProperty('--p',(total?dn/total*360:0)+'deg');
+  $('#habits').innerHTML=S.habits.map(h=>{
+    const st=streak(h.id);
+    return '<li class="h"><button class="chk'+(done(t,h.id)?' on':'')+'" data-act="tog" data-id="'+h.id+'" data-d="'+t+'" aria-label="Marcar '+esc(h.n)+'">✓</button>'+
+    '<div class="hn"><b>'+esc(h.n)+'</b><div class="dots">'+days.map(d=>'<button class="dot'+(done(d,h.id)?' on':'')+(d===t?' today':'')+'" data-act="tog" data-id="'+h.id+'" data-d="'+d+'" aria-label="'+d+'"></button>').join('')+'</div></div>'+
+    (st>1?'<span class="st">racha '+st+'</span>':'')+
+    '<button class="x" data-act="delh" data-id="'+h.id+'" aria-label="Quitar '+esc(h.n)+'">×</button></li>';
+  }).join('')||'<li class="empty">Añade tu primer hábito aquí abajo.</li>';
+
+  const month=t.slice(0,7);
+  const me=S.exp.filter(e=>e.d.startsWith(month)),te=S.exp.filter(e=>e.d===t);
+  $('#t-day').textContent=eur(sum(te));
+  $('#t-week').textContent=eur(sum(S.exp.filter(e=>days.includes(e.d))));
+  $('#t-month').textContent=eur(sum(me));
+  $('#chips').innerHTML=CATS.map(c=>'<button class="chip'+(S.cat===c?' on':'')+'" data-act="cat" data-c="'+c+'">'+c+'</button>').join('');
+  $('#elist').innerHTML=te.length?te.slice().reverse().map(e=>'<div class="e"><span>'+esc(e.c)+(e.n?': '+esc(e.n):'')+'</span><b>'+eur(e.a)+'</b><button class="x" data-act="dele" data-id="'+e.id+'" aria-label="Borrar gasto">×</button></div>').join(''):'<p class="empty">Sin gastos hoy.</p>';
+  const by=CATS.map(c=>[c,sum(me.filter(e=>e.c===c))]).filter(x=>x[1]>0);
+  const mx=Math.max(...by.map(x=>x[1]),1);
+  $('#cats').innerHTML=by.map(x=>'<div><span>'+x[0]+'</span><i style="width:'+Math.max(x[1]/mx*55,1)+'%"></i><b>'+eur(x[1])+'</b></div>').join('');
+}
+
+let V='hoy';
+const fd=s=>{const p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])};
+const lab=d=>d.toLocaleDateString('es-ES',{day:'numeric',month:'short'});
+const wkStart=d=>{const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-(x.getDay()+6)%7);return x};
+function weekStats(st,t){
+  const days=[0,1,2,3,4,5,6].map(i=>ds(addDays(st,i))),el=days.filter(d=>d<=t).length;
+  let hit=0;const per=S.habits.map(h=>{const c=days.filter(d=>done(d,h.id)).length;hit+=c;return{n:h.n,c}});
+  const ex=S.exp.filter(e=>days.includes(e.d));
+  return{el,per,pct:S.habits.length&&el?Math.round(hit/(S.habits.length*el)*100):0,tot:sum(ex),n:ex.length,
+    cats:CATS.map(c=>[c,sum(ex.filter(e=>e.c===c))]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1])};
+}
+function wkBlock(st,title,t){
+  const w=weekStats(st,t),p=weekStats(addDays(st,-7),t);
+  let h='<div class="wk"><h3>'+title+' <small>'+lab(st)+' – '+lab(addDays(st,6))+'</small></h3>';
+  if(!w.n&&!w.pct)return h+'<p class="empty">Sin registros esta semana.</p></div>';
+  if(S.habits.length){
+    const s=w.per.slice().sort((a,b)=>b.c-a.c),l=s[s.length-1];
+    h+='<p>✅ Hábitos: <b>'+w.pct+' %</b> cumplido. Mejor: '+esc(s[0].n)+' ('+s[0].c+'/'+w.el+')'+(s.length>1?'. A reforzar: '+esc(l.n)+' ('+l.c+'/'+w.el+')':'')+'.</p>';
+  }
+  h+=w.n?'<p>💶 Gastos: <b>'+eur(w.tot)+'</b> en '+w.n+(w.n>1?' compras':' compra')+'. Más alto: '+w.cats[0][0]+' ('+eur(w.cats[0][1])+')'+(p.tot>0?'. Frente a la semana anterior: '+(w.tot>=p.tot?'+':'')+eur(w.tot-p.tot):'')+'.</p>':'<p>Sin gastos.</p>';
+  return h+'</div>';
+}
+function views(){
+  const now=new Date(),t=ds(now),cur=wkStart(now),last=addDays(cur,-7),lk=ds(last);
+  $('#note').hidden=S.cat!=='Otros';
+  $('#welcome').hidden=!!S.name;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===V));
+  ['hoy','gas','res','his'].forEach(v=>{$('#v-'+v).hidden=V!==v});
+  const lw=weekStats(last,t);
+  if(V==='res'&&S.seen!==lk){S.seen=lk;save()}
+  $('#ban').hidden=!(V==='hoy'&&(lw.tot>0||lw.pct>0)&&S.seen!==lk);
+  let r=wkBlock(cur,'Esta semana',t)+wkBlock(last,'Semana pasada',t),old='';
+  for(let i=2;i<10;i++){
+    const st=addDays(cur,-7*i),w=weekStats(st,t);
+    if(w.tot>0||w.pct>0)old+='<div class="old"><span>'+lab(st)+' – '+lab(addDays(st,6))+'</span><span>Hábitos '+w.pct+' % · Gastos '+eur(w.tot)+'</span></div>';
+  }
+  $('#res').innerHTML=r+(old?'<p class="sub">Semanas anteriores</p>'+old:'');
+  const keys=[...new Set([...Object.keys(S.log).filter(k=>S.log[k].length),...S.exp.map(e=>e.d)])].sort().reverse();
+  $('#his').innerHTML=keys.length?keys.map(k=>{
+    const hs=S.habits.filter(h=>done(k,h.id)).map(h=>esc(h.n)),ex=S.exp.filter(e=>e.d===k);
+    return '<li class="hd"><b>'+fd(k).toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+'</b>'+
+      (hs.length?'<span>✅ Hábitos: '+hs.join(', ')+'</span>':'')+
+      (ex.length?'<span>💶 Gastos: '+eur(sum(ex))+' ('+ex.map(e=>e.c+(e.n?' ('+esc(e.n)+')':'')+' '+eur(e.a)).join(', ')+')</span>':'')+'</li>';
+  }).join(''):'<li class="empty">Aún no hay registros. Aquí aparecerá todo lo que marques y gastes.</li>';
+}
+const baseRender=render;
+render=function(){baseRender();views()};
+function localTips(d){
+  const h=d.habitos.slice().sort((a,b)=>b.diasCumplidos-a.diasCumplidos),tot=d.gastos.reduce((s,x)=>s+x.total,0);
+  if(!h.length||h.every(x=>!x.diasCumplidos))return '<p>Aún hay pocos datos. Marca tus hábitos unos días y vuelve a probar.</p>';
+  let t='<p>Mejor hábito: <b>'+esc(h[0].nombre)+'</b> ('+h[0].diasCumplidos+' de 14 días). ';
+  const w=h[h.length-1];
+  if(h.length>1&&w.diasCumplidos<7)t+='A reforzar: <b>'+esc(w.nombre)+'</b> ('+w.diasCumplidos+' de 14). Prueba a asociarlo a algo que ya haces cada día.';
+  t+='</p>';
+  if(tot>0){const g=d.gastos.slice().sort((a,b)=>b.total-a.total)[0];t+='<p>Tu mayor gasto: '+g.categoria+' ('+eur(g.total)+').</p>'}
+  return t+'<p>Ideas generales: duerme a horas regulares, muévete unos 20 minutos al día y bebe agua a lo largo del día.</p><p class="disc">Consejos generales; ante dudas de salud, consulta a un profesional.</p>';
+}
+async function analizar(){
+  const out=$('#anaout'),btn=$('#ana');out.hidden=false;
+  const days=[...Array(14)].map((_,i)=>ds(addDays(new Date(),i-13)));
+  const inR=e=>days.includes(e.d);
+  const data={nombre:S.name||'',dias:14,
+    habitos:S.habits.map(h=>({nombre:h.n,diasCumplidos:days.filter(d=>done(d,h.id)).length,rachaActual:streak(h.id)})),
+    gastos:CATS.map(c=>({categoria:c,total:sum(S.exp.filter(e=>inR(e)&&e.c===c)),detalle:c==='Otros'?S.exp.filter(e=>inR(e)&&e.c===c&&e.n).map(e=>e.n):undefined})).filter(x=>x.total>0)};
+  let sample=null;
+  try{sample=window.claude?await window.claude.use('sample'):null}catch(e){}
+  if(!sample){out.innerHTML=localTips(data);return}
+  out.textContent='Analizando…';btn.disabled=true;
+  try{
+    const r=await sample('Eres un coach de bienestar cercano. Con estos datos de hábitos y pequeños gastos de las últimas 2 semanas, escribe en español, con tono amable y breve (máximo 150 palabras): 1) qué va bien, 2) una o dos cosas a mejorar, 3) tres recomendaciones pequeñas y concretas de salud y bienestar (sueño, movimiento, hidratación, alimentación en general, estrés) conectadas con los datos. No diagnostiques ni des cifras de dieta ni medicación. Si hay pocos datos, dilo. Termina con una frase recordando que son consejos generales y que ante dudas de salud consulte a un profesional. Texto plano, sin markdown. Datos: '+JSON.stringify(data));
+    out.textContent=r.text;
+  }catch(e){out.innerHTML=localTips(data)}
+  btn.disabled=false;
+}
+function addHabit(){const i=$('#newh'),n=i.value.trim();if(!n)return;S.habits.push({id:uid(),n});i.value='';save();render()}
+function addExp(){
+  const i=$('#amt'),a=parseFloat(i.value.replace(',','.'));
+  if(!(a>0)){i.focus();return}
+  const nt=$('#note'),n=S.cat==='Otros'?nt.value.trim():'';
+  if(S.cat==='Otros'&&!n){nt.focus();return}
+  S.exp.push({id:uid(),d:ds(new Date()),a:Math.round(a*100)/100,c:S.cat,n});i.value='';nt.value='';save();render();i.focus();
+}
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,id=b.dataset.id;
+  if(a==='tog'){const d=b.dataset.d,l=S.log[d]||[];S.log[d]=l.includes(id)?l.filter(x=>x!==id):l.concat(id);}
+  else if(a==='delh'){S.habits=S.habits.filter(h=>h.id!==id)}
+  else if(a==='addh'){return addHabit()}
+  else if(a==='adde'){return addExp()}
+  else if(a==='cat'){S.cat=b.dataset.c;setTimeout(()=>{if(S.cat==='Otros')$('#note').focus()},0)}
+  else if(a==='view'){V=b.dataset.v;window.scrollTo(0,0)}
+  else if(a==='name'){const v=$('#nm').value.trim();if(!v){$('#nm').focus();return}S.name=v.slice(0,24)}
+  else if(a==='ana'){analizar();return}
+  else if(a==='dele'){S.exp=S.exp.filter(e=>e.id!==id)}
+  save();render();
+});
+$('#newh').addEventListener('keydown',e=>{if(e.key==='Enter')addHabit()});
+$('#amt').addEventListener('keydown',e=>{if(e.key==='Enter')addExp()});
+$('#note').addEventListener('keydown',e=>{if(e.key==='Enter')addExp()});
+$('#nm').addEventListener('keydown',e=>{if(e.key==='Enter')$('[data-act="name"]').click()});
+$('#hi').style.cursor='pointer';$('#hi').title='Cambiar nombre';
+$('#hi').addEventListener('click',()=>{$('#nm').value=S.name||'';$('#welcome').hidden=false;$('#nm').focus()});
+if(!S.name)setTimeout(()=>$('#nm').focus(),80);
+render();
+</script>
+</body>
+</html>
